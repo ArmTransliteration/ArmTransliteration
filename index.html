@@ -1,152 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Armenian Transliteration Tool</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.5;
-        }
-        h1 { text-align: center; }
-        input {
-            width: 100%;
-            font-size: 1.2em;
-            padding: 8px;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        td {
-            font-family: monospace;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Armenian Transliteration Tool</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 40px;
+    max-width: 800px;
+  }
+  textarea {
+    width: 100%;
+    height: 100px;
+    font-size: 1.1em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    background: #f2f2f2;
+  }
+</style>
 </head>
+
 <body>
-    <h1>Armenian Transliteration Tool</h1>
-    <p>Type an Armenian name below and see transliterations in four standards:</p>
-    <input type="text" id="armInput" placeholder="Type Armenian name..." oninput="transliterate()">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Standard</th>
-                <th>Transliteration</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>LOC (Library of Congress)</td>
-                <td id="loc"></td>
-            </tr>
-            <tr>
-                <td>HMB (Hübschmann–Meillet–Benveniste)</td>
-                <td id="hmb"></td>
-            </tr>
-            <tr>
-                <td>Passport / ICAO</td>
-                <td id="passport"></td>
-            </tr>
-            <tr>
-                <td>ASCII (English letters only)</td>
-                <td id="ascii"></td>
-            </tr>
-        </tbody>
-    </table>
+<h1>Armenian Transliteration</h1>
 
-    <script>
-        // ---------------- LOC transliteration ----------------
-        const locMap = {
-            "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g","Դ":"D","դ":"d",
-            "Ե":"E","ե":"e","Զ":"Z","զ":"z","Է":"Ē","է":"ē","Ը":"Ě","ը":"ě",
-            "Թ":"Tʻ","թ":"tʻ","Ժ":"Zh","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
-            "Խ":"Kh","խ":"kh","Ծ":"Ts","ծ":"ts","Կ":"K","կ":"k","Հ":"H","հ":"h",
-            "Ձ":"Dz","ձ":"dz","Ղ":"Gh","ղ":"gh","Ճ":"Ch","ճ":"ch","Մ":"M","մ":"m",
-            "Յ":"Y","յ":"y","Ն":"N","ն":"n","Շ":"Sh","շ":"sh","Ո":"O","ո":"o",
-            "Չ":"Chʻ","չ":"chʻ","Պ":"P","պ":"p","Ջ":"J","ջ":"j","Ռ":"R","ռ":"r",
-            "Ս":"S","ս":"s","Վ":"V","վ":"v","Տ":"T","տ":"t","Ր":"R","ր":"r",
-            "Ց":"Tsʻ","ց":"tsʻ","Փ":"Pʻ","փ":"pʻ","Ք":"Kʻ","ք":"kʻ","Օ":"Ō","օ":"ō",
-            "Ֆ":"F","ֆ":"f"
-        };
+<p>Enter Armenian text:</p>
+<textarea id="input" oninput="update()"></textarea>
 
-        // ---------------- HMB transliteration ----------------
-        const hmbMap = {
-            "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g","Դ":"D","դ":"d",
-            "Ե":"E","ե":"e","Զ":"Z","զ":"z","Է":"Ē","է":"ē","Ը":"Ə","ը":"ə",
-            "Թ":"T‘","թ":"t‘","Ժ":"Ž","ժ":"ž","Ի":"I","ի":"i","Լ":"L","լ":"l",
-            "Խ":"X","խ":"x","Ծ":"C","ծ":"c","Կ":"K","կ":"k","Հ":"H","հ":"h",
-            "Ձ":"J","ձ":"j","Ղ":"Ł","ղ":"ł","Ճ":"Č","ճ":"č","Մ":"M","մ":"m",
-            "Յ":"Y","յ":"y","Ն":"N","ն":"n","Շ":"Š","շ":"š","Ո":"O","ո":"o",
-            "Չ":"Č‘","չ":"č‘","Պ":"P","պ":"p","Ջ":"ǰ","ջ":"ǰ","Ռ":"Ṙ","ռ":"ṛ",
-            "Ս":"S","ս":"s","Վ":"V","վ":"v","Տ":"T","տ":"t","Ր":"R","ր":"r",
-            "Ց":"C‘","ց":"c‘","Փ":"P‘","փ":"p‘","Ք":"K‘","ք":"k‘","Օ":"Ō","օ":"ō",
-            "Ֆ":"F","ֆ":"f"
-        };
+<table>
+  <tr><th>Standard</th><th>Transliteration</th></tr>
+  <tr><td>LOC (Library of Congress)</td><td id="loc"></td></tr>
+  <tr><td>HMB (Hübschmann–Meillet–Benveniste)</td><td id="hmb"></td></tr>
+  <tr><td>Passport / ICAO</td><td id="passport"></td></tr>
+  <tr><td>ASCII (English letters only)</td><td id="ascii"></td></tr>
+</table>
 
-        // ---------------- Passport transliteration ----------------
-        const passportMap = {
-            "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g","Դ":"D","դ":"d",
-            "Ե":"E","ե":"e","Զ":"Z","զ":"z","Է":"E","է":"e","Ը":"E","ը":"e",
-            "Թ":"T","թ":"t","Ժ":"Zh","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
-            "Խ":"Kh","խ":"kh","Ծ":"Ts","ծ":"ts","Կ":"K","կ":"k","Հ":"H","հ":"h",
-            "Ձ":"Dz","ձ":"dz","Ղ":"Gh","ղ":"gh","Ճ":"Ch","ճ":"ch","Մ":"M","մ":"m",
-            "Յ":"Y","յ":"y","Ն":"N","ն":"n","Շ":"Sh","շ":"sh","Ո":"O","ո":"o",
-            "Չ":"Ch","չ":"ch","Պ":"P","պ":"p","Ջ":"J","ջ":"j","Ռ":"R","ռ":"r",
-            "Ս":"S","ս":"s","Վ":"V","վ":"v","Տ":"T","տ":"t","Ր":"R","ր":"r",
-            "Ց":"Ts","ց":"ts","Փ":"P","փ":"p","Ք":"K","ք":"k","Օ":"O","օ":"o",
-            "Ֆ":"F","ֆ":"f"
-        };
+<script>
+function transliterate(text, system) {
 
-        // ---------------- ASCII transliteration ----------------
-        const asciiMap = {
-            "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g","Դ":"D","դ":"d",
-            "Ե":"E","ե":"e","Զ":"Z","զ":"z","Է":"E","է":"e","Ը":"E","ը":"e",
-            "Թ":"Th","թ":"th","Ժ":"Zh","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
-            "Խ":"X","խ":"x","Ծ":"Ts","ծ":"ts","Կ":"K","կ":"k","Հ":"H","հ":"h",
-            "Ձ":"Dz","ձ":"dz","Ղ":"Gh","ղ":"gh","Ճ":"Ch","ճ":"ch","Մ":"M","մ":"m",
-            "Յ":"Y","յ":"y","Ն":"N","ն":"n","Շ":"Sh","շ":"sh","Ո":"O","ո":"o",
-            "Չ":"Chh","չ":"chh","Պ":"P","պ":"p","Ջ":"J","ջ":"j","Ռ":"Rr","ռ":"rr",
-            "Ս":"S","ս":"s","Վ":"V","վ":"v","Տ":"T","տ":"t","Ր":"R","ր":"r",
-            "Ց":"Tsh","ց":"tsh","Փ":"Ph","փ":"ph","Ք":"Kh","ք":"kh","Օ":"O","օ":"o",
-            "Ֆ":"F","ֆ":"f"
-        };
+  const initialRules = {
+    "Ե": "Ye", "ե": "ye",
+    "Ո": "Vo", "ո": "vo"
+  };
 
-        function transliterate() {
-            let text = document.getElementById("armInput").value.trim();
-            document.getElementById("loc").textContent = convert(text, locMap);
-            document.getElementById("hmb").textContent = convert(text, hmbMap);
-            document.getElementById("passport").textContent = convert(text, passportMap);
-            document.getElementById("ascii").textContent = convert(text, asciiMap);
-        }
+  const maps = {
 
-        function convert(text, map) {
-            if (!text) return "";
-            // Handle digraphs and initial Ե
-            text = text.replace(/Ու/g,"U").replace(/ու/g,"u");
-            text = text.replace(/Եվ/g,"Ev").replace(/և/g,"ev");
-            if (/^Ե/.test(text)) text = "Ye" + text.slice(1);
-            if (/^ե/.test(text)) text = "ye" + text.slice(1);
+    loc: {
+      "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g",
+      "Դ":"D","դ":"d","Ե":"E","ե":"e","Զ":"Z","զ":"z",
+      "Է":"E","է":"e","Ը":"Ë","ը":"ë","Թ":"Tʻ","թ":"tʻ",
+      "Ժ":"Zh","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
+      "Խ":"Kh","խ":"kh","Ծ":"Ts","ծ":"ts","Կ":"K","կ":"k",
+      "Հ":"H","հ":"h","Ձ":"Dz","ձ":"dz","Ղ":"Gh","ղ":"gh",
+      "Ճ":"Ch","ճ":"ch","Մ":"M","մ":"m","Յ":"Y","յ":"y",
+      "Ն":"N","ն":"n","Շ":"Sh","շ":"sh","Ո":"O","ո":"o",
+      "Չ":"Chʻ","չ":"chʻ","Պ":"P","պ":"p","Ջ":"J","ջ":"j",
+      "Ռ":"Ṙ","ռ":"ṙ","Ս":"S","ս":"s","Վ":"V","վ":"v",
+      "Տ":"T","տ":"t","Ր":"R","ր":"r","Ց":"Tsʻ","ց":"tsʻ",
+      "Ւ":"W","ւ":"w","Փ":"Pʻ","փ":"pʻ","Ք":"Kʻ","ք":"kʻ",
+      "Օ":"O","օ":"o","Ֆ":"F","ֆ":"f"
+    },
 
-            let result = "";
-            for (let char of text) {
-                result += map[char] || char;
-            }
-            return result;
-        }
-    </script>
+    hmb: {
+      "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g",
+      "Դ":"D","դ":"d","Ե":"E","ե":"e","Զ":"Z","զ":"z",
+      "Է":"Ē","է":"ē","Ը":"Ə","ը":"ə","Թ":"Tʿ","թ":"tʿ",
+      "Ժ":"Ž","ժ":"ž","Ի":"I","ի":"i","Լ":"L","լ":"l",
+      "Խ":"X","խ":"x","Ծ":"C","ծ":"c","Կ":"K","կ":"k",
+      "Հ":"H","հ":"h","Ձ":"J","ձ":"j","Ղ":"Ɣ","ղ":"ɣ",
+      "Ճ":"Č","ճ":"č","Մ":"M","մ":"m","Յ":"Y","յ":"y",
+      "Ն":"N","ն":"n","Շ":"Š","շ":"š","Ո":"O","ո":"o",
+      "Չ":"Čʿ","չ":"čʿ","Պ":"P","պ":"p","Ջ":"ǰ","ջ":"ǰ",
+      "Ռ":"Ṙ","ռ":"ṙ","Ս":"S","ս":"s","Վ":"V","վ":"v",
+      "Տ":"T","տ":"t","Ր":"R","ր":"r","Ց":"Cʿ","ց":"cʿ",
+      "Ւ":"W","ւ":"w","Փ":"Pʿ","փ":"pʿ","Ք":"Kʿ","ք":"kʿ",
+      "Օ":"O","օ":"o","Ֆ":"F","ֆ":"f"
+    },
+
+    passport: {
+      "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g",
+      "Դ":"D","դ":"d","Ե":"E","ե":"e","Զ":"Z","զ":"z",
+      "Է":"E","է":"e","Ը":"Y","ը":"y","Թ":"T","թ":"t",
+      "Ժ":"ZH","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
+      "Խ":"KH","խ":"kh","Ծ":"TS","ծ":"ts","Կ":"K","կ":"k",
+      "Հ":"H","հ":"h","Ձ":"DZ","ձ":"dz","Ղ":"GH","ղ":"gh",
+      "Ճ":"CH","ճ":"ch","Մ":"M","մ":"m","Յ":"Y","յ":"y",
+      "Ն":"N","ն":"n","Շ":"SH","շ":"sh","Ո":"O","ո":"o",
+      "Չ":"CH","չ":"ch","Պ":"P","պ":"p","Ջ":"J","ջ":"j",
+      "Ռ":"R","ռ":"r","Ս":"S","ս":"s","Վ":"V","վ":"v",
+      "Տ":"T","տ":"t","Ր":"R","ր":"r","Ց":"TS","ց":"ts",
+      "Ւ":"V","ւ":"v","Փ":"P","փ":"p","Ք":"K","ք":"k",
+      "Օ":"O","օ":"o","Ֆ":"F","ֆ":"f"
+    },
+
+    ascii: {
+      "Ա":"A","ա":"a","Բ":"B","բ":"b","Գ":"G","գ":"g",
+      "Դ":"D","դ":"d","Ե":"E","ե":"e","Զ":"Z","զ":"z",
+      "Է":"E","է":"e","Ը":"Y","ը":"y","Թ":"Th","թ":"th",
+      "Ժ":"Zh","ժ":"zh","Ի":"I","ի":"i","Լ":"L","լ":"l",
+      "Խ":"Kh","խ":"kh","Ծ":"Ts","ծ":"ts","Կ":"K","կ":"k",
+      "Հ":"H","հ":"h","Ձ":"Dz","ձ":"dz","Ղ":"Gh","ղ":"gh",
+      "Ճ":"Ch","ճ":"ch","Մ":"M","մ":"m","Յ":"Y","յ":"y",
+      "Ն":"N","ն":"n","Շ":"Sh","շ":"sh","Ո":"O","ո":"o",
+      "Չ":"Ch","չ":"ch","Պ":"P","պ":"p","Ջ":"J","ջ":"j",
+      "Ռ":"R","ռ":"r","Ս":"S","ս":"s","Վ":"V","վ":"v",
+      "Տ":"T","տ":"t","Ր":"R","ր":"r","Ց":"Ts","ց":"ts",
+      "Ւ":"V","ւ":"v","Փ":"P","փ":"p","Ք":"K","ք":"k",
+      "Օ":"O","օ":"o","Ֆ":"F","ֆ":"f"
+    }
+
+  };
+
+  return text.split(/(\s+)/).map(word => {
+    if (!word.trim()) return word;
+
+    let result = "";
+    for (let i = 0; i < word.length; i++) {
+      const ch = word[i];
+      if (i === 0 && initialRules[ch]) {
+        result += initialRules[ch];
+      } else {
+        result += maps[system][ch] || ch;
+      }
+    }
+    return result;
+  }).join("");
+}
+
+function update() {
+  const text = document.getElementById("input").value;
+  document.getElementById("loc").innerText = transliterate(text, "loc");
+  document.getElementById("hmb").innerText = transliterate(text, "hmb");
+  document.getElementById("passport").innerText = transliterate(text, "passport");
+  document.getElementById("ascii").innerText = transliterate(text, "ascii");
+}
+</script>
+
 </body>
 </html>
