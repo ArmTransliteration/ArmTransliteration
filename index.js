@@ -84,6 +84,11 @@ function transliterateArmenianLOC(text)
 }
 
 function transliterateSimple(world) {
+
+    world  = world.replace(/ՈՒ/g, "U");
+    world  = world.replace(/Ու/g, "U");
+    world =  world.replace(/ու/g, "u");
+
     let locMap = 
         {
             "Ա": "A",   "ա": "a",
@@ -124,12 +129,12 @@ function transliterateSimple(world) {
             "Ք": "Kʿ",  "ք": "kʿ",
             "Օ": "Ō",   "օ": "ō",
             "Ֆ": "F",   "ֆ": "f",
-            "Ու": "U",   "ու": "u", 
             "և": "ew"
         };
     let result = "";
     for (const arm of world)
     {
+        
         result += locMap[arm] !== undefined ? locMap[arm] : arm;
     }
     return result;
