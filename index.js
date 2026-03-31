@@ -65,7 +65,7 @@ function transliterateArmenianLOC(text)
     text = text.replace(/(?<!^)եվ/g, "եʹվ");
     text = specific_letter_combination(text);
 
-// ʹ 
+    // ʹ 
 
     if (text.startsWith("Ե"))
         text = "Ye" + text.slice(1);
@@ -83,6 +83,57 @@ function transliterateArmenianLOC(text)
     return result;
 }
 
+function transliterateSimple(world) {
+    let locMap = 
+        {
+            "Ա": "A",   "ա": "a",
+            "Բ": "B",   "բ": "b",
+            "Գ": "G",   "գ": "g",
+            "Դ": "D",   "դ": "d",
+            "Ե": "E",   "ե": "e",
+            "Զ": "Z",   "զ": "z",
+            "Է": "Ē",   "է": "ē",
+            "Ը": "Ə",   "ը": "ə", 
+            "Թ": "Tʿ",  "թ": "tʿ",
+            "Ժ": "Ž",   "ժ": "ž",
+            "Ի": "I",   "ի": "i",
+            "Լ": "L",   "լ": "l",
+            "Խ": "X",   "խ": "x",
+            "Ծ": "C",   "ծ": "c",
+            "Կ": "K",   "կ": "k",
+            "Հ": "H",   "հ": "h",
+            "Ձ": "J",   "ձ": "j",
+            "Ղ": "Ł",   "ղ": "ł",
+            "Ճ": "Č",   "ճ": "č",
+            "Մ": "M",   "մ": "m",
+            "Յ": "Y",   "յ": "y",
+            "Ն": "N",   "ն": "n",
+            "Շ": "Š",   "շ": "š",
+            "Ո": "O",   "ո": "o",
+            "Չ": "Čʿ",  "չ": "čʿ",
+            "Պ": "P",   "պ": "p",
+            "Ջ": "ǰ",   "ջ": "ǰ",
+            "Ռ": "Ṙ",   "ռ": "ṙ",
+            "Ս": "S",   "ս": "s",
+            "Վ": "V",   "վ": "v",
+            "Տ": "T",   "տ": "t",
+            "Ր": "R",   "ր": "r",
+            "Ց": "Cʿ",  "ց": "cʿ",
+            "Ւ": "W",   "ւ": "w",
+            "Փ": "Pʿ",  "փ": "pʿ",
+            "Ք": "Kʿ",  "ք": "kʿ",
+            "Օ": "Ō",   "օ": "ō",
+            "Ֆ": "F",   "ֆ": "f",
+            "և": "ew"
+        };
+    let result = "";
+    for (const arm of world)
+    {
+        result += locMap[arm] !== undefined ? locMap[arm] : arm;
+    }
+    return result;
+}
+
 function update() {
 
     const text = document.getElementById("input").value;
@@ -96,12 +147,12 @@ function update() {
     for(const world of new_text)
     {
         result["loc"] += transliterateArmenianLOC(world) + " ";
-        // result[1] += transliterateSimple(text, maps.hmb);
+        result["hmb"] += transliterateSimple(world) + " ";
         // result[2] += transliterateSimple(text, maps.passport);
         // result[3] += transliterateSimple(text, maps.ascii);
     }
     document.getElementById("loc").innerText = result["loc"];
-    //document.getElementById("hmb").innerText = result[1];
+    document.getElementById("hmb").innerText = result["hmb"];
     //document.getElementById("passport").innerText = result[2];
     //document.getElementById("ascii").innerText = result[3]; 
 }
