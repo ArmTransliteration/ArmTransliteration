@@ -84,10 +84,11 @@ function transliterateArmenianLOC(text)
 }
 
 function transliterateSimple(world) {
-
-    world  = world.replace(/ՈՒ/g, "U");
-    world  = world.replace(/Ու/g, "U");
-    world =  world.replace(/ու/g, "u");
+    
+    world = world.replace(/ՈՒ|Ու|ու/g, (match) => {
+    if (match === "ու") return "u";
+        return "U";
+    });
 
     let locMap = 
         {
