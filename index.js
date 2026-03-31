@@ -124,6 +124,7 @@ function transliterateSimple(world) {
             "Ք": "Kʿ",  "ք": "kʿ",
             "Օ": "Ō",   "օ": "ō",
             "Ֆ": "F",   "ֆ": "f",
+            "Ու": "U",   "ու": "u", 
             "և": "ew"
         };
     let result = "";
