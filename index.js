@@ -134,7 +134,6 @@ function transliterateSimple(world) {
     let result = "";
     for (const arm of world)
     {
-        
         result += locMap[arm] !== undefined ? locMap[arm] : arm;
     }
     return result;
