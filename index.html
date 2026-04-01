@@ -1,28 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Armenian Transliteration Tool</title>
-<link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Armenian Transliteration Tool</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
+  <h1>Armenian Transliteration</h1>
 
-<h1>Armenian Transliteration</h1>
+  <p class="bold">Enter Armenian text:</p>
+  <textarea id="input" oninput="update()" placeholder="Enter Armenian text here"></textarea>
 
-<p>Enter Armenian text:</p>
-<textarea id="input" oninput="update()"></textarea>
+  <table class="custom-table">  
+    <thead>
+      <tr>
+        <th>Standard</th>
+        <th>Transliteration</th>
+      </tr>
+    </thead>
 
-<table>
-  <tr><th>Standard</th><th>Transliteration</th></tr>
-  <tr><td>LOC (Library of Congress)</td><td id="loc"></td></tr>
-  <tr><td>HMB (Hübschmann–Meillet–Benveniste)</td><td id="hmb"></td></tr>
-  <tr><td>Passport / ICAO</td><td id="passport"></td></tr>
-  <tr><td>ASCII (English letters only)</td><td id="ascii"></td></tr>
-</table>
+    <tbody>
+      <tr>
+        <td class="standard" title="">
+       
+          <p class="bold">  Transliteration standard</p>
+          <p class="bold"> HMB (Hübschmann–Meillet–Benveniste) </p>
+         
+        </td>
 
-<script src="index.js"></script>
+        <td class="text-cell">
+          <div class="cell-wrapper">
+            <textarea id="hmb" class="text-output" title="HMB transliteration output" readonly></textarea>
+            
+            <button class="copy-btn" title="Copy" onclick="copyText('hmb')">
+              <img src="copy.png" alt="copy">
+            </button>
+          </div>
+        </td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
 
+  <script src="index.js"></script>
 </body>
 </html>
 

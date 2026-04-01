@@ -10,6 +10,23 @@ function specific_letter_combination(text)
     });
     return text;
 }
+function copyText(id)
+{
+   var textarea;
+
+    textarea = document.getElementById(id);
+
+    if (!textarea)
+        return;
+
+    navigator.clipboard.writeText(textarea.value)
+        .then(function() {
+            console.log("Copied!");
+        })
+        .catch(function(err) {
+            console.log("Error:", err);
+        });
+}
 
 function transliterateArmenianLOC(text) 
 {
@@ -157,7 +174,7 @@ function update() {
         // result[2] += transliterateSimple(text, maps.passport);
         // result[3] += transliterateSimple(text, maps.ascii);
     }
-    document.getElementById("loc").innerText = result["loc"];
+    // document.getElementById("loc").innerText = result["loc"];
     document.getElementById("hmb").innerText = result["hmb"];
     //document.getElementById("passport").innerText = result[2];
     //document.getElementById("ascii").innerText = result[3]; 
